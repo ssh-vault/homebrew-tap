@@ -1,9 +1,9 @@
 class SshVault < Formula
   desc "encrypt/decrypt using ssh keys"
   homepage "https://ssh-vault.com/"
-  url "https://bintray.com/nbari/ssh-vault/download_file?file_path=ssh-vault_0.7.4_darwin_amd64.zip"
-  sha256 "8b8fe5c40d79837aeacb759fc257187d479dff02155c3fe52d73515d78d1c076"
-  version "0.7.4"
+  url "https://bintray.com/nbari/ssh-vault/download_file?file_path=ssh-vault_0.8.0_darwin_amd64.zip"
+  sha256 "d41781261b13cc1176c974a2395d7888e0f83b51b3ea4fbe1cd1f5ee1da9c637"
+  version "0.8.0"
 
   def install
     bin.install "ssh-vault"
