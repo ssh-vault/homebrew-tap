@@ -1,11 +1,31 @@
 class SshVault < Formula
   desc "encrypt/decrypt using ssh keys"
   homepage "https://ssh-vault.com/"
-  url "https://bintray.com/nbari/ssh-vault/download_file?file_path=ssh-vault_0.8.1_darwin_amd64.zip"
-  sha256 "f2df6c8689667d86b130b37872ed61a1d58acd3204af885e3d29bb92d19e4667"
-  version "0.8.1"
+  url "https://github.com/ssh-vault/ssh-vault.git",
+      :tag => "0.8.1",
+      :revision => "bf7ffb4a2bd8b933b7e0f124736c1751f84203c3"
+
+  head "https://github.com/ssh-vault/ssh-vault.git"
+
+  bottle do
+    cellar :any_skip_relocation
+    sha256 "179e07bb22e2755e3d082f07607cf2e98e266defaace3ceb764a4c32f03ccf8d" => :sierra
+    sha256 "5be8ef01a8568b7de75b19d525a4830b0c934c43b9e8f9fb150cbdcb18091a26" => :el_capitan
+    sha256 "6dcf9d7de2489f5e3d6fd56488c3abe2bff1ea6f6bf0d9de89421b0e9a7e2e38" => :yosemite
+  end
+
+  depends_on "go" => :build
 
   def install
-    bin.install "ssh-vault"
+    ENV["GOPATH"] = buildpath
+    (buildpath/"src/github.com/ssh-vault/ssh-vault").install buildpath.children
+    cd "src/github.com/ssh-vault/ssh-vault" do
+      system "make"
+      bin.install "ssh-vault"
+    end
+  end
+
+  test do
+    system bin/"ssh-vault", "-v"
   end
 end
