@@ -20,7 +20,7 @@ class SshVault < Formula
     ENV["GOPATH"] = buildpath
     (buildpath/"src/github.com/ssh-vault/ssh-vault").install buildpath.children
     cd "src/github.com/ssh-vault/ssh-vault" do
-      system "make"
+      system "make", "LINKFLAGS=-s"
       bin.install "ssh-vault"
     end
   end
