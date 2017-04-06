@@ -3,7 +3,7 @@ class SshVault < Formula
   homepage "https://ssh-vault.com/"
   url "https://github.com/ssh-vault/ssh-vault.git",
       :tag => "0.11.0",
-      :revision => "4f9116ab464b63704bfa20d2be1baa0dc0e9e53b"
+      :revision => "b46169ac607a8033dcf4424cfb3db6eb85de0c6a"
 
   head "https://github.com/ssh-vault/ssh-vault.git"
 
