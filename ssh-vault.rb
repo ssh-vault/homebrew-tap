@@ -18,7 +18,6 @@ class SshVault < Formula
 
   def install
     ENV["GOPATH"] = buildpath
-    ENV["LDFLAGS"] = -w
     (buildpath/"src/github.com/ssh-vault/ssh-vault").install buildpath.children
     cd "src/github.com/ssh-vault/ssh-vault" do
       system "make"
