@@ -4,8 +4,8 @@ class SshVault < Formula
   desc "encrypt/decrypt using ssh keys"
   homepage "https://ssh-vault.com/"
   url "https://github.com/ssh-vault/ssh-vault.git",
-      :tag => "0.11.3",
-      :revision => "684ad4b94f789104fa2735222871bfe673eb605a"
+      :tag => "0.12.0",
+      :revision => "db797e0980e4e5db45cf2a70010fa03e1a2b2adc"
 
   head "https://github.com/ssh-vault/ssh-vault.git"
 
@@ -45,7 +45,7 @@ class SshVault < Formula
 
   go_resource "github.com/ssh-vault/ssh2pem" do
     url "https://github.com/ssh-vault/ssh2pem.git",
-        :revision => "02e6a0142e2ba52a22dc41a20a3227c5c76e99f2"
+        :revision => "bcc684626e5d5dc7deac558bbf27a9e3a0ec1f17"
   end
 
   def install
