@@ -11,7 +11,7 @@ class SshVault < Formula
 
   depends_on "go" => :build
 
-  go_resource "golang.org/golang/dep" do
+  go_resource "github.com/golang/dep" do
       url "https://github.com/golang/dep.git",
         :revision => "418356b62913b5068cb2b6131889518e0a5e5bd6"
   end
