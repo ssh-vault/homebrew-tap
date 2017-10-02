@@ -1,38 +1,38 @@
-require "language/go"
-
 class SshVault < Formula
-  desc "encrypt/decrypt using ssh keys"
+  desc "Encrypt/decrypt using SSH keys"
   homepage "https://ssh-vault.com/"
   url "https://github.com/ssh-vault/ssh-vault.git",
-      :tag => "0.12.2",
-      :revision => "39c919577ab522293750d1c01174a8b5b9871aae"
+      :tag => "0.12.3",
+      :revision => "33b59a33979223c2a5e7e5b63f0bd01e50fc04ae"
 
   head "https://github.com/ssh-vault/ssh-vault.git"
 
-  depends_on "go" => :build
-
-  go_resource "github.com/golang/dep" do
-      url "https://github.com/golang/dep.git",
-        :revision => "418356b62913b5068cb2b6131889518e0a5e5bd6"
+  bottle do
+    cellar :any_skip_relocation
+    sha256 "449945a60458fde34c31a6a8b97fd1e6572dc295ab70bee410a4c3ae2f4c57c1" => :high_sierra
+    sha256 "6fa89a87974ee2b4a791ba0a2f28249b7bd12abc64436a5015e207cb0d73b6a0" => :sierra
+    sha256 "57ab92a375411d4cc60796247a77ea8855ca6ca16411d051ebac75782f1d1403" => :el_capitan
   end
+
+  depends_on "dep" => :build
+  depends_on "go" => :build
 
   def install
     ENV["GOPATH"] = buildpath
     (buildpath/"src/github.com/ssh-vault/ssh-vault").install buildpath.children
-    Language::Go.stage_deps resources, buildpath/"src"
-
-    cd "src/github.com/golang/dep" do
-        system "go", "install", ".../cmd/dep"
-    end
-
     cd "src/github.com/ssh-vault/ssh-vault" do
-      system buildpath/"bin/dep", "ensure"
+      system "dep", "ensure"
       ldflags = "-s -w -X main.version=#{version}"
       system "go", "build", "-ldflags", ldflags, "-o", "#{bin}/ssh-vault", "cmd/ssh-vault/main.go"
+      prefix.install_metafiles
     end
   end
 
   test do
-    system bin/"ssh-vault", "-v"
+    output = shell_output("echo hi | #{bin}/ssh-vault -u new create")
+    fingerprint = output.split("\n").first.split(";").last
+    cmd = "#{bin}/ssh-vault -k https://ssh-keys.online/#{fingerprint} view"
+    output = pipe_output(cmd, output, 0)
+    assert_equal "hi", output.chomp
   end
 end
